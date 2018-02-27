@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="16dp"
+    android:orientation="vertical"
+    >
+
+    <TextView
+        style="?android:listSeparatorTextViewStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/setting_label"
+        android:gravity="center"
+        android:textSize="18sp"
+        android:layout_marginBottom="8dp"/>
+
+<android.support.v7.widget.LinearLayoutCompat
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <TextView
+        style="?android:listSeparatorTextViewStyle"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="@string/font_label"
+        android:gravity="center_horizontal|center_vertical"
+        android:layout_weight=".7"/>
+
+  <android.support.v7.widget.AppCompatSpinner
+      android:id="@+id/font_spinner"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="@android:drawable/btn_dropdown"
+      android:spinnerMode="dropdown"
+      android:layout_marginBottom="8dp"
+      android:layout_marginTop="8dp"
+      android:layout_weight=".3"/>
+</android.support.v7.widget.LinearLayoutCompat>
+
+    <TextView
+        style="?android:listSeparatorTextViewStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/volume_label"
+        android:gravity="center"/>
+
+    <android.support.v7.widget.AppCompatSeekBar
+        android:id="@+id/volume_slider"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"/>
+
+    <TextView
+        style="?android:listSeparatorTextViewStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/background_label"
+        android:gravity="center"/>
+    
+    <android.support.v7.widget.ButtonBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        android:layout_marginTop="8dp">
+        <Button
+            android:id="@+id/background_button_1"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+        <Button
+            android:id="@+id/background_button_2"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+        <Button
+            android:id="@+id/background_button_3"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+        <Button
+            android:id="@+id/background_button_4"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+    </android.support.v7.widget.ButtonBarLayout>
+    
+    <CheckBox
+        android:id="@+id/notification_box"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/notifications_label"/>
+
+    <CheckBox
+        android:id="@+id/sharing_box"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/sharing_label"/>
+
+</LinearLayout>
