@@ -11,5 +11,9 @@ public class JournalListActivity extends SingleFragmentActivity {
     @Override
     protected Fragment createFragment() { return new JournalListFragment(); }
 
+    @Override
+    public void onEntrySelected(JournalEntry entry) {
+        if (findViewById(R.id.detail))
+    }
 
 }

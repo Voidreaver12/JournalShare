@@ -10,6 +10,7 @@ import java.util.UUID;
 public class JournalEntry {
     private UUID mID;
     private Date mDate;
+    private String mTitle;
 
     public JournalEntry() {
         mID = UUID.randomUUID();
@@ -19,6 +20,8 @@ public class JournalEntry {
     public UUID getId() {
         return mID;
     }
+
+    public String getTitle() { return mTitle; }
 
     public Date getDate() {
         return mDate;
