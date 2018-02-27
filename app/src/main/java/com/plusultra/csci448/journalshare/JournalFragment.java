@@ -13,6 +13,7 @@ import android.widget.TextView;
 import org.w3c.dom.Text;
 
 import java.util.Date;
+import java.util.UUID;
 
 /**
  * Created by Han on 2/27/18.
@@ -20,9 +21,27 @@ import java.util.Date;
 
 public class JournalFragment extends Fragment {
 
-    private EditText mEntry;
+    private static final String ARG_ENTRY_ID = "entry_id";
+
+    private JournalEntry mEntry;
+    private EditText mText;
     private TextView mDate;
     private TextView mTime;
+
+    public static JournalFragment newInstance(UUID entryId) {
+        Bundle args = new Bundle();
+        args.putSerializable(ARG_ENTRY_ID, entryId);
+        JournalFragment fragment = new JournalFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        UUID entryId = (UUID) getArguments().getSerializable(ARG_ENTRY_ID);
+        mEntry = JournalBook.get(getActivity()).getEntry(entryId);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -31,7 +50,7 @@ public class JournalFragment extends Fragment {
         Date placeHolder = new Date();
 
 
-        mEntry = (EditText) v.findViewById(R.id.entry_box);
+        mText = (EditText) v.findViewById(R.id.entry_box);
 
         mDate = (TextView) v.findViewById(R.id.entry_date);
         mDate.setText(placeHolder.getDate());

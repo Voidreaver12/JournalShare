@@ -27,8 +27,8 @@ public class SettingsActivity extends Fragment {
         View v = inflater.inflate(R.layout.settings_activity, container, false);
         Spinner fontSpinner = (Spinner)v.findViewById(R.id.font_spinner);
         String[] items = new String[]{"1", "2", "three"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, items);
-        fontSpinner.setAdapter(adapter);
+        //ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, items);
+        //fontSpinner.setAdapter(adapter);
 
         return v;
     }
