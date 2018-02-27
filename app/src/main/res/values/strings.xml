@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">JournalShare</string>
+    <string name="setting_label">Settings</string>
+    <string name="notifications_label">Enable Notifications</string>
+    <string name="sharing_label">Enable Sharing</string>
+    <string name="font_label">Font:</string>
+    <string name="volume_label">App Volume:</string>
+    <string name="background_label">Background</string>
 </resources>

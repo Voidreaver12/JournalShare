@@ -3,7 +3,12 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/JournalShare.iml" filepath="$PROJECT_DIR$/JournalShare.iml" />
+<<<<<<< HEAD
+=======
+      <module fileurl="file://Z:\FinalApp\JournalShare\JournalShare.iml" filepath="Z:\FinalApp\JournalShare\JournalShare.iml" />
+>>>>>>> 28c2ec478f532d87c9cc672c573ae2947ae3e96c
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://Z:\FinalApp\JournalShare\app\app.iml" filepath="Z:\FinalApp\JournalShare\app\app.iml" />
     </modules>
   </component>
 </project>
