@@ -27,6 +27,16 @@ public class JournalFragment extends Fragment {
     private EditText mText;
     private TextView mDate;
     private TextView mTime;
+    private Callbacks mCallbacks;
+
+    public interface Callbacks {
+        void onEntryUpdated(JournalEntry entry);
+    }
+
+    private void updateEntry() {
+//        CrimeLab.get(getActivity()).updateCrime(mCrime);
+        mCallbacks.onEntryUpdated(mEntry);
+    }
 
     public static JournalFragment newInstance(UUID entryId) {
         Bundle args = new Bundle();
