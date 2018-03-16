@@ -1,6 +1,7 @@
 package com.plusultra.csci448.journalshare;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
@@ -22,6 +23,8 @@ import java.util.List;
  */
 
 public class JournalListFragment extends Fragment {
+
+    private static final int RC_SETTINGS = 5;
 
     private RecyclerView mJournalRecyclerView;
     private LinearLayout mEmptyView;
@@ -108,13 +111,25 @@ public class JournalListFragment extends Fragment {
                 createNewJournalEntry();
                 return true;
             case R.id.menu_item_map_search:
-                // map
+                Intent mapIntent = MapActivity.newIntent(getActivity());
+                startActivity(mapIntent);
                 return true;
             case R.id.menu_item_settings:
-                // settings
+                Intent settingsIntent = SettingsActivity.newIntent(getActivity());
+                startActivityForResult(settingsIntent, RC_SETTINGS);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
+    public void onActivityResult(int reqCode, int resCode, Intent data) {
+        if (resCode != Activity.RESULT_OK) {
+            return;
+        }
+        if (reqCode == RC_SETTINGS && data != null) {
+            // process settings data, update journalbook
         }
     }
 
