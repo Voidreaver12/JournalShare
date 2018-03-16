@@ -107,7 +107,7 @@ public class JournalListFragment extends Fragment {
             case R.id.menu_item_new_journal_entry:
                 createNewJournalEntry();
                 return true;
-            case R.id.menu_item_map:
+            case R.id.menu_item_map_search:
                 // map
                 return true;
             case R.id.menu_item_settings:

@@ -1,35 +1,29 @@
 package com.plusultra.csci448.journalshare;
 
 import android.app.Fragment;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.Spinner;
+
+import java.util.UUID;
 
 /**
  * Created by cwiddico on 2/27/2018.
  */
 
-public class SettingsActivity extends Fragment {
-    private Spinner spinner;
+public class SettingsActivity extends SingleFragmentActivity {
 
+    //**************************************************************************************************************************
+    // Pass data between activity and fragment with bundle args, add parameters to newIntent and createFragment, and newInstance
+    //**************************************************************************************************************************
 
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public static Intent newIntent(Context packageContext) {
+        Intent intent = new Intent(packageContext, SettingsActivity.class);
+        return intent;
     }
-
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.settings_activity, container, false);
-        Spinner fontSpinner = (Spinner)v.findViewById(R.id.font_spinner);
-        String[] items = new String[]{"1", "2", "three"};
-        //ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, items);
-        //fontSpinner.setAdapter(adapter);
-
-        return v;
+    protected android.support.v4.app.Fragment createFragment() {
+        return SettingsFragment.newInstance();
     }
+
 }

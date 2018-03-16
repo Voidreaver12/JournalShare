@@ -1,5 +1,6 @@
 package com.plusultra.csci448.journalshare;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
@@ -7,10 +8,12 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import java.util.UUID;
@@ -109,6 +112,29 @@ public class JournalFragment extends Fragment {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.fragment_journal, menu);
+        //MenuItem share = menu.findItem(R.id.menu_item_map_share);
+        //MenuItem delete = menu.findItem(R.id.menu_item_delete);
+        //MenuItem camera = menu.findItem(R.id.menu_item_camera);
 
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId()) {
+            case R.id.menu_item_map_share:
+                Toast.makeText(getActivity(), R.string.toast_share, Toast.LENGTH_SHORT).show();
+                return true;
+            case R.id.menu_item_delete:
+                JournalBook journal = JournalBook.get(getActivity());
+                journal.deleteEntry(mEntry.getId());
+                Intent intent = new Intent(getActivity(), JournalListActivity.class);
+                startActivity(intent);
+                return true;
+            case R.id.menu_item_camera:
+                Toast.makeText(getActivity(), R.string.toast_camera, Toast.LENGTH_SHORT).show();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }

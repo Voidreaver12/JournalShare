@@ -42,5 +42,10 @@ public class JournalBook {
 
     public void addEntry(JournalEntry e) { mEntries.add(e); }
 
+    public void deleteEntry(UUID entryId) {
+        JournalEntry e = getEntry(entryId);
+        mEntries.remove(e);
+    }
+
     public List<JournalEntry> getEntries() { return mEntries; }
 }
