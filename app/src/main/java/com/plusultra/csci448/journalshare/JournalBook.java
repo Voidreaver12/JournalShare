@@ -23,11 +23,12 @@ public class JournalBook {
 
     private JournalBook(Context context) {
         mEntries = new ArrayList<JournalEntry>();
+        /*
         for (int i = 0; i < 100; i++) {
             JournalEntry e = new JournalEntry();
             e.setTitle("Entry #" + i);
             addEntry(e);
-        }
+        }*/
     }
 
     public JournalEntry getEntry(UUID id) {

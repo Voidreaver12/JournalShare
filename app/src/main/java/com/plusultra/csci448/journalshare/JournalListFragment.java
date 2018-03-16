@@ -146,7 +146,7 @@ public class JournalListFragment extends Fragment {
         }
 
         @Override
-        public void onClick(View v) { /*callback*/ }
+        public void onClick(View v) { mCallbacks.onEntrySelected(mEntry); }
 
         public void bindEntry(JournalEntry entry) {
             mEntry = entry;
