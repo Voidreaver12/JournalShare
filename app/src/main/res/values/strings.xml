@@ -9,4 +9,6 @@
     <string name="entry_default_title">Title</string>
     <string name="toast_share">You shared this journal entry!</string>
     <string name="toast_camera">This will bring up the camera to add a picture to your journal entry.</string>
+    <string name="toast_map">There will soon be journal entries on here for you to tap and view.</string>
+    <string name="title_activity_maps">Map</string>
 </resources>
