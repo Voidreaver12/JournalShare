@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,6 +33,9 @@ public class JournalFragment extends Fragment {
     private TextView mDate;
     private TextView mTime;
     private Callbacks mCallbacks;
+    private LinearLayout mContainer;
+
+    private int entryBackgroundResId = R.drawable.default_bg;
 
     public interface Callbacks {
         void onEntryUpdated(JournalEntry entry);
@@ -55,12 +59,17 @@ public class JournalFragment extends Fragment {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
         UUID entryId = (UUID) getArguments().getSerializable(ARG_ENTRY_ID);
-        mEntry = JournalBook.get(getActivity()).getEntry(entryId);
+        JournalBook journalBook = JournalBook.get(getActivity());
+        mEntry = journalBook.getEntry(entryId);
+        if (journalBook.isBgSet()) { entryBackgroundResId = journalBook.getEntryBgId(); }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_entry, container, false);
+
+        mContainer = (LinearLayout) v.findViewById(R.id.entry_container);
+        mContainer.setBackgroundResource(entryBackgroundResId);
 
         mTitle = (EditText) v.findViewById(R.id.entry_title);
         mTitle.setText(mEntry.getTitle());

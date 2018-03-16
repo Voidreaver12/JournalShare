@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView
+        android:textAlignment="center"
+        android:layout_gravity="center"
+        android:text="@string/settings_bg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <LinearLayout
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageButton
+            android:id="@+id/settings_bg_button1"
+            android:src="@drawable/default_bg"
+            android:background="@drawable/imagebutton_black_border"
+            android:layout_margin="10dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp" />
+        <ImageButton
+            android:id="@+id/settings_bg_button2"
+            android:src="@drawable/paper1"
+            android:background="@drawable/imagebutton_black_border"
+            android:layout_margin="10dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp" />
+        <ImageButton
+            android:id="@+id/settings_bg_button3"
+            android:src="@drawable/paper2"
+            android:background="@drawable/imagebutton_black_border"
+            android:layout_margin="10dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp" />
+        <ImageButton
+            android:id="@+id/settings_bg_button4"
+            android:src="@drawable/paper3"
+            android:background="@drawable/imagebutton_black_border"
+            android:layout_margin="10dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp" />
+    </LinearLayout>
+</LinearLayout>

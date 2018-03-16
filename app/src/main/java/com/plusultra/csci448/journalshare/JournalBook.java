@@ -13,6 +13,8 @@ import java.util.UUID;
 public class JournalBook {
     private static JournalBook sJournalBook;
     private List<JournalEntry> mEntries;
+    private int entryBgId;
+    private boolean isEntryBgSet = false;
 
     public static JournalBook get(Context context) {
         if (sJournalBook == null) {
@@ -48,4 +50,11 @@ public class JournalBook {
     }
 
     public List<JournalEntry> getEntries() { return mEntries; }
+
+    public void setmEntryBgId(int id) {
+        entryBgId = id;
+        isEntryBgSet = true;
+    }
+    public int getEntryBgId() { return entryBgId; }
+    public boolean isBgSet() { return isEntryBgSet; }
 }

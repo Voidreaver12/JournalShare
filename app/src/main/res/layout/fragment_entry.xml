@@ -3,6 +3,12 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <LinearLayout
+        android:id="@+id/entry_container"
+        android:layout_margin="20dp"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <EditText
         android:id="@+id/entry_title"
         android:layout_width="match_parent"
@@ -31,5 +37,5 @@
         android:layout_weight="1"
         android:textSize="24sp"
         android:gravity="center"/>
-
+    </LinearLayout>
 </LinearLayout>
