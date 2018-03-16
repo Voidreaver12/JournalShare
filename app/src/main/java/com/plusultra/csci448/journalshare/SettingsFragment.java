@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
@@ -36,33 +35,34 @@ public class SettingsFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.settings_activity, container, false);
+        View v = inflater.inflate(R.layout.fragment_settings, container, false);
 
+        final JournalBook journalBook = JournalBook.get(getActivity());
         mBackground_button_1 = (ImageButton) v.findViewById(R.id.settings_bg_button1);
         mBackground_button_1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-
+                journalBook.setEntryBgId(R.drawable.default_bg);
             }
         });
 
         mBackground_button_2 = (ImageButton) v.findViewById(R.id.settings_bg_button2);
         mBackground_button_2.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-
+                journalBook.setEntryBgId(R.drawable.paper1);
             }
         });
 
         mBackground_button_3 = (ImageButton) v.findViewById(R.id.settings_bg_button3);
         mBackground_button_3.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-
+                journalBook.setEntryBgId(R.drawable.paper2);
             }
         });
 
         mBackground_button_4 = (ImageButton) v.findViewById(R.id.settings_bg_button4);
         mBackground_button_4.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-
+                journalBook.setEntryBgId(R.drawable.paper3);
             }
         });
 

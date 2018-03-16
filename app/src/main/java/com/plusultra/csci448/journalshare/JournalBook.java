@@ -51,7 +51,7 @@ public class JournalBook {
 
     public List<JournalEntry> getEntries() { return mEntries; }
 
-    public void setmEntryBgId(int id) {
+    public void setEntryBgId(int id) {
         entryBgId = id;
         isEntryBgSet = true;
     }
