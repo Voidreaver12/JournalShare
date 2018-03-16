@@ -38,28 +38,28 @@ public class SettingsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.settings_activity, container, false);
 
-        mBackground_button_1 = (ImageButton) v.findViewById(R.id.background_button_1);
+        mBackground_button_1 = (ImageButton) v.findViewById(R.id.settings_bg_button1);
         mBackground_button_1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
             }
         });
 
-        mBackground_button_2 = (ImageButton) v.findViewById(R.id.background_button_2);
+        mBackground_button_2 = (ImageButton) v.findViewById(R.id.settings_bg_button2);
         mBackground_button_2.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
             }
         });
 
-        mBackground_button_3 = (ImageButton) v.findViewById(R.id.background_button_3);
+        mBackground_button_3 = (ImageButton) v.findViewById(R.id.settings_bg_button3);
         mBackground_button_3.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
             }
         });
 
-        mBackground_button_4 = (ImageButton) v.findViewById(R.id.background_button_4);
+        mBackground_button_4 = (ImageButton) v.findViewById(R.id.settings_bg_button4);
         mBackground_button_4.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
