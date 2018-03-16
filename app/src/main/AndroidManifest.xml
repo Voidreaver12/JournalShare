@@ -18,6 +18,12 @@
         <activity android:name=".JournalPagerActivity"
             android:parentActivityName=".JournalListActivity">
         </activity>
+        <activity android:name=".MapActivity"
+            android:parentActivityName=".JournalListActivity">
+        </activity>
+        <activity android:name=".SettingsActivity"
+            android:parentActivityName=".JournalListActivity">
+        </activity>
     </application>
 
 </manifest>
