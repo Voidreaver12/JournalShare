@@ -3,7 +3,11 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
+    <EditText
+        android:id="@+id/entry_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="32sp" />
     <TextView
         android:id="@+id/entry_date"
         android:layout_width="match_parent"

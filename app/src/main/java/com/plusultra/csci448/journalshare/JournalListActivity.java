@@ -16,7 +16,12 @@ public class JournalListActivity extends SingleFragmentActivity
     @Override
     public void onEntrySelected(JournalEntry entry) {
         if (findViewById(R.id.detail_fragment_container) == null) {
-            
+            Intent intent = JournalPagerActivity.newIntent(this, entry.getId());
+            startActivity(intent);
+        } else {
+            Fragment newDetail = JournalFragment.newInstance(entry.getId());
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.detail_fragment_container, newDetail).commit();
         }
     }
 
