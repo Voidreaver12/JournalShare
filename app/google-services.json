@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "102456738315",
+    "firebase_url": "https://journalshare-1c4d3.firebaseio.com",
+    "project_id": "journalshare-1c4d3",
+    "storage_bucket": "journalshare-1c4d3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:102456738315:android:f36d1d7581a62566",
+        "android_client_info": {
+          "package_name": "com.plusultra.csci448.journalshare"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "102456738315-8q8kidk7cn8bc5ls8rr7ne2i57nvkgm1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyARGEQnVKPOeesMykefFIyr_RStSb8mAKY"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
