@@ -65,6 +65,9 @@ public class JournalFragment extends Fragment {
         JournalBook journalBook = JournalBook.get(getActivity());
         mEntry = journalBook.getEntry(entryId);
         if (journalBook.isBgSet()) { entryBackgroundResId = journalBook.getEntryBgId(); }
+
+        //start poll service
+        PollService.setServiceAlarm(getActivity(), true);
     }
 
     @Override
