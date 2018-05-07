@@ -8,7 +8,7 @@ import android.support.v4.app.Fragment;
  */
 
 public class JournalListActivity extends SingleFragmentActivity
-                                    implements JournalListFragment.Callbacks {
+                                    implements JournalListFragment.Callbacks, JournalFragment.Callbacks {
 
     @Override
     protected Fragment createFragment() { return new JournalListFragment(); }
@@ -23,6 +23,13 @@ public class JournalListActivity extends SingleFragmentActivity
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.detail_fragment_container, newDetail).commit();
         }
+    }
+
+    @Override
+    public void onEntryUpdated(JournalEntry entry) {
+        JournalListFragment listFragment = (JournalListFragment) getSupportFragmentManager()
+                                            .findFragmentById(R.id.fragment_container);
+        listFragment.updateUI();
     }
 
 }
