@@ -23,7 +23,9 @@ public class JournalBaseHelper extends SQLiteOpenHelper {
                 JournalTable.Cols.UUID + ", " +
                 JournalTable.Cols.TITLE + ", " +
                 JournalTable.Cols.TEXT + ", " +
-                JournalTable.Cols.DATE + ")"
+                JournalTable.Cols.DATE + ", " +
+                JournalTable.Cols.LAT + ", " +
+                JournalTable.Cols.LON + ")"
         );
     }
 

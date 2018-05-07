@@ -1,13 +1,21 @@
 package com.plusultra.csci448.journalshare;
 
+import android.*;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Typeface;
+import android.location.Location;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.content.ContextCompat;
 import android.telecom.Call;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -20,7 +28,21 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.Api;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.PendingResult;
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.location.LocationListener;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationServices;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.io.FileDescriptor;
+import java.io.PrintWriter;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by Han on 2/27/18.
@@ -29,6 +51,19 @@ import java.util.UUID;
 public class JournalFragment extends Fragment {
 
     private static final String ARG_ENTRY_ID = "entry_id";
+
+    private static final String TAG = "JournalFragment";
+
+    private static final String[] LOCATION_PERMISSIONS = new String[]{
+            android.Manifest.permission.ACCESS_FINE_LOCATION,
+            android.Manifest.permission.ACCESS_COARSE_LOCATION,
+    };
+    private static final int REQUEST_LOCATION_PERMISSIONS = 1;
+
+    private FirebaseDatabase mDatabase;
+    private DatabaseReference mRef;
+
+    private GoogleApiClient mClient;
 
     private JournalEntry mEntry;
     private EditText mTitle;
@@ -45,7 +80,6 @@ public class JournalFragment extends Fragment {
     }
 
     private void updateEntry() {
-//        CrimeLab.get(getActivity()).updateCrime(mCrime);
         mCallbacks.onEntryUpdated(mEntry);
     }
 
@@ -61,13 +95,31 @@ public class JournalFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+        mDatabase = FirebaseDatabase.getInstance();
+        mRef = mDatabase.getReference("entries");
         UUID entryId = (UUID) getArguments().getSerializable(ARG_ENTRY_ID);
         JournalBook journalBook = JournalBook.get(getActivity());
         mEntry = journalBook.getEntry(entryId);
         if (journalBook.isBgSet()) { entryBackgroundResId = journalBook.getEntryBgId(); }
 
+        mClient = new GoogleApiClient.Builder(getActivity())
+                .addApi(LocationServices.API)
+                .addConnectionCallbacks(new GoogleApiClient.ConnectionCallbacks() {
+                    @Override
+                    public void onConnected(@Nullable Bundle bundle) {
+                        getActivity().invalidateOptionsMenu();
+                    }
+
+                    @Override
+                    public void onConnectionSuspended(int i) {
+
+                    }
+                })
+                .build();
+
         //start poll service
         PollService.setServiceAlarm(getActivity(), true);
+
     }
 
     @Override
@@ -169,6 +221,13 @@ public class JournalFragment extends Fragment {
         switch(item.getItemId()) {
             case R.id.menu_item_map_share:
                 Toast.makeText(getActivity(), R.string.toast_share, Toast.LENGTH_SHORT).show();
+                if (JournalBook.get(getActivity()).isSharingEnabled()) {
+                    if (hasLocationPermission()) {
+                        share();
+                    } else {
+                        requestPermissions(LOCATION_PERMISSIONS, REQUEST_LOCATION_PERMISSIONS);
+                    }
+                }
                 return true;
             case R.id.menu_item_delete:
                 JournalBook journal = JournalBook.get(getActivity());
@@ -185,6 +244,56 @@ public class JournalFragment extends Fragment {
     }
 
 
+    private void share() {
+        getLocation();
+        DatabaseReference mNewEntryRef = mRef.child(mEntry.getId().toString());
+        mNewEntryRef.setValue(mEntry);
+    }
+
+    private void getLocation() {
+        LocationRequest request = LocationRequest.create();
+        request.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+        request.setNumUpdates(1);
+        request.setInterval(0);
+        try {
+            LocationServices.FusedLocationApi
+                    .requestLocationUpdates(mClient, request, new LocationListener() {
+                        @Override
+                        public void onLocationChanged(Location location) {
+                            Log.i(TAG, "Got a location: " + location);
+                            mEntry.setLat(location.getLatitude());
+                            mEntry.setLon(location.getLongitude());
+                            updateEntry();
+                        }
+                    });
+        } catch (SecurityException se) {
+            Log.e(TAG, "Failed to access location services", se);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        switch(requestCode) {
+            case REQUEST_LOCATION_PERMISSIONS:
+                if (hasLocationPermission()) {
+                    share();
+                }
+            default:
+                super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
+    }
+
+    private boolean hasLocationPermission() {
+        int result = ContextCompat.checkSelfPermission(getActivity(), LOCATION_PERMISSIONS[0]);
+        return (result == PackageManager.PERMISSION_GRANTED);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        getActivity().invalidateOptionsMenu();
+        mClient.connect();
+    }
 
     @Override
     public void onAttach(Activity activity) {

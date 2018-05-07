@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "102456738315-hqnjdu5lrf9v8kd7bpl61bca9amk16qe.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.plusultra.csci448.journalshare",
+            "certificate_hash": "727ce8d7ae32545bb86e700daf3a03adbd2046c4"
+          }
+        },
+        {
           "client_id": "102456738315-8q8kidk7cn8bc5ls8rr7ne2i57nvkgm1.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -29,8 +37,13 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "102456738315-8q8kidk7cn8bc5ls8rr7ne2i57nvkgm1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         },
         "ads_service": {
           "status": 2
