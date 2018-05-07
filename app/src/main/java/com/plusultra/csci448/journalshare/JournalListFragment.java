@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.LinearLayoutManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -57,6 +58,9 @@ public class JournalListFragment extends Fragment {
         if (savedInstanceState != null) {
 
         }
+
+        //start poll service
+        PollService.setServiceAlarm(getActivity(), true);
     }
 
     @Override
@@ -102,6 +106,13 @@ public class JournalListFragment extends Fragment {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.fragment_journal_list, menu);
+
+        MenuItem toggleItem = menu.findItem(R.id.menu_item_toggle_polling);
+        if (PollService.isServiceAlarmOn(getActivity())) {
+            toggleItem.setTitle(R.string.stop_polling);
+        } else {
+            toggleItem.setTitle(R.string.start_polling);
+        }
     }
 
     @Override
@@ -113,6 +124,11 @@ public class JournalListFragment extends Fragment {
             case R.id.menu_item_map_search:
                 Intent mapIntent = MapActivity.newIntent(getActivity());
                 startActivity(mapIntent);
+                return true;
+            case R.id.menu_item_toggle_polling:
+                boolean shouldStartAlarm = !PollService.isServiceAlarmOn(getActivity());
+                PollService.setServiceAlarm(getActivity(), shouldStartAlarm);
+                getActivity().invalidateOptionsMenu();
                 return true;
             case R.id.menu_item_settings:
                 Intent settingsIntent = SettingsActivity.newIntent(getActivity());

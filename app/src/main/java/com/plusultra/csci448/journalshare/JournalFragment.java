@@ -117,9 +117,6 @@ public class JournalFragment extends Fragment {
                 })
                 .build();
 
-        //start poll service
-        PollService.setServiceAlarm(getActivity(), true);
-
     }
 
     @Override
