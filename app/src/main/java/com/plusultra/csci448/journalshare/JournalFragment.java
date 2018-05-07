@@ -1,9 +1,11 @@
 package com.plusultra.csci448.journalshare;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.telecom.Call;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -85,7 +87,7 @@ public class JournalFragment extends Fragment {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 mEntry.setTitle(s.toString());
-                //update entry
+                updateEntry();
             }
 
             @Override
@@ -126,7 +128,7 @@ public class JournalFragment extends Fragment {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 mEntry.setText(s.toString());
-                // update entry
+                updateEntry();
             }
 
             @Override
@@ -170,5 +172,25 @@ public class JournalFragment extends Fragment {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        mCallbacks = (Callbacks) activity;
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mCallbacks = null;
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        JournalBook.get(getActivity()).updateEntry(mEntry);
     }
 }
