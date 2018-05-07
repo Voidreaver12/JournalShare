@@ -81,7 +81,14 @@ public class JournalFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                mEntry.setTitle(s.toString());
+                String converted = s.toString();
+                if(converted.contains("\n")){
+                    //There are occurences of the newline character
+                    converted = converted.replace("\n", "");
+                    mEntry.setTitle(converted);
+                } else {
+                    mEntry.setTitle(converted);
+                }
                 //update entry
             }
 
