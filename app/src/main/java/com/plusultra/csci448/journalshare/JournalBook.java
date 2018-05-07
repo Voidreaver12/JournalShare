@@ -23,6 +23,7 @@ public class JournalBook {
     private int entryBgId;
     private boolean isEntryBgSet = false;
     private int font;
+    private boolean isSharing = true;
 
     public static JournalBook get(Context context) {
         if (sJournalBook == null) {
@@ -42,6 +43,8 @@ public class JournalBook {
         values.put(JournalTable.Cols.TITLE, entry.getTitle());
         values.put(JournalTable.Cols.TEXT, entry.getText());
         values.put(JournalTable.Cols.DATE, entry.getDate().getTime());
+        values.put(JournalTable.Cols.LAT, entry.getLat());
+        values.put(JournalTable.Cols.LON, entry.getLon());
         return values;
     }
 
@@ -126,5 +129,7 @@ public class JournalBook {
     public int getEntryBgId() { return entryBgId; }
     public boolean isBgSet() { return isEntryBgSet; }
 
+    public void setSharing(boolean s) { isSharing = s; }
+    public boolean isSharingEnabled() { return isSharing; }
 
 }

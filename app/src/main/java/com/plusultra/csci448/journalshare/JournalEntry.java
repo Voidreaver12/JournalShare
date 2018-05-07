@@ -12,6 +12,8 @@ public class JournalEntry {
     private Date mDate;
     private String mTitle;
     private String mText;
+    private double mLat;
+    private double mLon;
 
     public JournalEntry() {
         this(UUID.randomUUID());
@@ -41,4 +43,9 @@ public class JournalEntry {
     public void setText(String text) { mText = text; }
 
     public void setTitle(String title) { mTitle = title; }
+
+    public void setLon(double l) { mLon = l; }
+    public void setLat(double l) { mLat = l; }
+    public double getLon() { return mLon; }
+    public double getLat() { return mLat; }
 }
