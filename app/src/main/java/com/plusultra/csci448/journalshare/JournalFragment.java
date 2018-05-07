@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Typeface;
 import android.location.Location;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -239,13 +240,8 @@ public class JournalFragment extends Fragment {
     }
 
 
-    private void share() {
-        getLocation();
-        DatabaseReference mNewEntryRef = mRef.child(mEntry.getId().toString());
-        mNewEntryRef.setValue(mEntry);
-    }
 
-    private void getLocation() {
+    private void share() {
         LocationRequest request = LocationRequest.create();
         request.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
         request.setNumUpdates(1);
@@ -259,12 +255,16 @@ public class JournalFragment extends Fragment {
                             mEntry.setLat(location.getLatitude());
                             mEntry.setLon(location.getLongitude());
                             updateEntry();
+                            DatabaseReference mNewEntryRef = mRef.child(mEntry.getId().toString());
+                            mNewEntryRef.setValue(mEntry);
                         }
                     });
         } catch (SecurityException se) {
             Log.e(TAG, "Failed to access location services", se);
         }
     }
+
+
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {

@@ -7,6 +7,9 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
+import android.util.TypedValue;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -31,6 +34,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 /**
  * Created by ndeibert on 3/16/2018.
@@ -83,6 +87,29 @@ public class MapFragment extends SupportMapFragment {
             @Override
             public void onMapReady(GoogleMap googleMap) {
                 mMap = googleMap;
+                mMap.setOnMapLoadedCallback(new GoogleMap.OnMapLoadedCallback() {
+                    @Override
+                    public void onMapLoaded() {
+                        updateUI();
+                    }
+                });
+                mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+                    @Override
+                    public boolean onMarkerClick(Marker marker) {
+                        marker.showInfoWindow();
+                        return true;
+                    }
+                });
+                mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+                    @Override
+                    public void onInfoWindowClick(Marker marker) {
+                        for (JournalEntry e : entries) {
+                            if (e.getId().toString().equals(marker.getTag().toString())) {
+                                JournalBook.get(getActivity()).addEntry(e);
+                            }
+                        }
+                    }
+                });
                 //updateUI();
                 mDatabase = FirebaseDatabase.getInstance();
                 mRef = mDatabase.getReference("entries");
@@ -92,14 +119,19 @@ public class MapFragment extends SupportMapFragment {
                         Map<String, Object> journalMap = (HashMap<String, Object>)dataSnapshot.getValue();
                         for (Object o : journalMap.values()) {
                             if (o instanceof Map) {
-                                //Log.d(TAG, "title: " + ((Map) o).get("title"));
-                                //Log.d(TAG, "text: " + ((Map) o).get("text"));
                                 JournalEntry entry = new JournalEntry();
                                 entry.setTitle(((Map) o).get("title").toString());
                                 entry.setText(((Map) o).get("text").toString());
+                                entry.setLat((double)((Map) o).get("lat"));
+                                entry.setLon((double)((Map) o).get("lon"));
+                                //Log.d(TAG, "title: " + entry.getTitle());
+                                //Log.d(TAG, "text: " + entry.getText());
+                                //Log.d(TAG, "lat: " + entry.getLat());
+                                //Log.d(TAG, "lon: " + entry.getLon());
                                 entries.add(entry);
                             }
                         }
+                        updateUI();
                     }
 
                     @Override
@@ -118,7 +150,6 @@ public class MapFragment extends SupportMapFragment {
         }
 
         Toast.makeText(getActivity(), R.string.toast_map, Toast.LENGTH_SHORT).show();
-
     }
 
     @Override
@@ -126,6 +157,7 @@ public class MapFragment extends SupportMapFragment {
         super.onStart();
         getActivity().invalidateOptionsMenu();
         mClient.connect();
+        updateUI();
     }
 
     @Override
@@ -153,6 +185,7 @@ public class MapFragment extends SupportMapFragment {
 
 
     private void updateUI() {
+        Log.d(TAG, "entries size: " + entries.size());
         if (mMap == null) {
             return;
         }
@@ -160,13 +193,13 @@ public class MapFragment extends SupportMapFragment {
         LatLngBounds.Builder boundsBuilder = new LatLngBounds.Builder();
         if (entries.size() > 0) {
             for (int i = 0; i < entries.size(); i++) {
-                /*LatLng point = new LatLng(entries.get(i).getLat(), entries.get(i).getLon());
+                LatLng point = new LatLng(entries.get(i).getLat(), entries.get(i).getLon());
                 MarkerOptions marker = new MarkerOptions()
                         .position(point)
-                        .title("lat/lng: (" + point.latitude + ", " + point.longitude + ")");
+                        .title(entries.get(i).getTitle());
                 Marker m = mMap.addMarker(marker);
                 m.setTag(entries.get(i).getId().toString());
-                boundsBuilder.include(point);*/
+                boundsBuilder.include(point);
             }
         } else { // If our app has an empty database, create bounds to include the entire state of colorado
             LatLng coloradoNorthEast = new LatLng(41f, -102f);
@@ -175,9 +208,9 @@ public class MapFragment extends SupportMapFragment {
             boundsBuilder.include(coloradoSouthWest);
         }
         LatLngBounds bounds = boundsBuilder.build();
-        //int margin = getResources().getDimensionPixelSize(R.dimen.map_inset_margin);
-        //CameraUpdate update = CameraUpdateFactory.newLatLngBounds(bounds, margin);
-        //mMap.animateCamera(update);
+        int margin = getResources().getDimensionPixelSize(R.dimen.map_inset_margin);
+        CameraUpdate update = CameraUpdateFactory.newLatLngBounds(bounds, margin);
+        mMap.animateCamera(update);
     }
 
 
