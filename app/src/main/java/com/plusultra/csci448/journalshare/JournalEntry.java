@@ -14,7 +14,11 @@ public class JournalEntry {
     private String mText;
 
     public JournalEntry() {
-        mID = UUID.randomUUID();
+        this(UUID.randomUUID());
+    }
+
+    public JournalEntry(UUID id) {
+        mID = id;
         mDate = new Date();
     }
 

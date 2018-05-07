@@ -34,6 +34,7 @@ public class SettingsFragment extends Fragment {
     private SeekBar mVolumeSlider;
     private Spinner mFontSpinner;
 
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -116,6 +117,7 @@ public class SettingsFragment extends Fragment {
 
                 // Showing selected spinner item
                 Toast.makeText(parent.getContext(), "Selected: " + item, Toast.LENGTH_LONG).show();
+               journalBook.setFont(position);
             }
 
             @Override

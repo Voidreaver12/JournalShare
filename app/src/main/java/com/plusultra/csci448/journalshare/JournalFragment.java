@@ -1,8 +1,11 @@
 package com.plusultra.csci448.journalshare;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.telecom.Call;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -68,6 +71,8 @@ public class JournalFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_entry, container, false);
 
+
+
         mContainer = (LinearLayout) v.findViewById(R.id.entry_container);
         mContainer.setBackgroundResource(entryBackgroundResId);
 
@@ -89,7 +94,7 @@ public class JournalFragment extends Fragment {
                 } else {
                     mEntry.setTitle(converted);
                 }
-                //update entry
+                updateEntry();
             }
 
             @Override
@@ -98,6 +103,28 @@ public class JournalFragment extends Fragment {
             }
         });
         mText = (EditText) v.findViewById(R.id.entry_box);
+
+        JournalBook journalBook = JournalBook.get(getActivity());
+        int font = journalBook.getFont();
+        if (font == 0) {
+            Typeface externalFont = Typeface.createFromAsset(getContext().getAssets(), "fonts/Roboto-Black.ttf");
+            ((TextView) v).setTypeface(externalFont);
+        }
+
+        else if(font == 1) {
+            Typeface externalFont = Typeface.createFromAsset(getContext().getAssets(), "fonts/Roboto-Medium.ttf");
+            ((TextView) v).setTypeface(externalFont);
+        }
+        else if(font == 2) {
+            Typeface externalFont = Typeface.createFromAsset(getContext().getAssets(), "fonts/Roboto-Thin.ttf");
+            ((TextView) v).setTypeface(externalFont);
+        }
+        if (font == 3) {
+            Typeface externalFont = Typeface.createFromAsset(getContext().getAssets(), "fonts/Chantelli_Antiqua.ttf");
+            ((TextView) v).setTypeface(externalFont);
+        }
+
+
         mText.setText(mEntry.getText());
         mText.addTextChangedListener(new TextWatcher() {
             @Override
@@ -108,7 +135,7 @@ public class JournalFragment extends Fragment {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 mEntry.setText(s.toString());
-                // update entry
+                updateEntry();
             }
 
             @Override
@@ -152,5 +179,25 @@ public class JournalFragment extends Fragment {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        mCallbacks = (Callbacks) activity;
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mCallbacks = null;
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        JournalBook.get(getActivity()).updateEntry(mEntry);
     }
 }
