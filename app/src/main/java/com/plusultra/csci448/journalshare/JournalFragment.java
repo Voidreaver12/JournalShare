@@ -108,20 +108,20 @@ public class JournalFragment extends Fragment {
         int font = journalBook.getFont();
         if (font == 0) {
             Typeface externalFont = Typeface.createFromAsset(getContext().getAssets(), "fonts/Roboto-Black.ttf");
-            ((TextView) v).setTypeface(externalFont);
+            ((TextView) mText).setTypeface(externalFont);
         }
 
         else if(font == 1) {
             Typeface externalFont = Typeface.createFromAsset(getContext().getAssets(), "fonts/Roboto-Medium.ttf");
-            ((TextView) v).setTypeface(externalFont);
+            ((TextView) mText).setTypeface(externalFont);
         }
         else if(font == 2) {
             Typeface externalFont = Typeface.createFromAsset(getContext().getAssets(), "fonts/Roboto-Thin.ttf");
-            ((TextView) v).setTypeface(externalFont);
+            ((TextView) mText).setTypeface(externalFont);
         }
         if (font == 3) {
             Typeface externalFont = Typeface.createFromAsset(getContext().getAssets(), "fonts/Chantelli_Antiqua.ttf");
-            ((TextView) v).setTypeface(externalFont);
+            ((TextView) mText).setTypeface(externalFont);
         }
 
 
