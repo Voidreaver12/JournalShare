@@ -1,5 +1,6 @@
 package com.plusultra.csci448.journalshare;
 
+import android.content.ContentValues;
 import android.content.Context;
 
 import java.util.ArrayList;
@@ -15,6 +16,7 @@ public class JournalBook {
     private List<JournalEntry> mEntries;
     private int entryBgId;
     private boolean isEntryBgSet = false;
+    private int font;
 
     public static JournalBook get(Context context) {
         if (sJournalBook == null) {
@@ -55,6 +57,17 @@ public class JournalBook {
         entryBgId = id;
         isEntryBgSet = true;
     }
+
+    public void setFont(int id) {
+        font = id;
+    }
+
+    public int getFont() {
+       return font;
+    }
+
     public int getEntryBgId() { return entryBgId; }
     public boolean isBgSet() { return isEntryBgSet; }
+
+
 }
