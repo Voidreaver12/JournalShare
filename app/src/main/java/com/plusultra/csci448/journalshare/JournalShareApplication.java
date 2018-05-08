@@ -7,6 +7,9 @@ import com.google.firebase.database.FirebaseDatabase;
 
 
 /**
+ * JournalShareApplication is used to set the
+ * Firebase context.
+ *
  * Created by ndeibert on 5/7/2018.
  */
 

@@ -37,6 +37,12 @@ import java.util.Map;
 import java.util.UUID;
 
 /**
+ * MapFragment is where the user can browse on a Google Map
+ * and look for anonymous journal entries from the remote
+ * database. Tapping on a pin will bring up the title of that
+ * journal entry, and tapping on the title will download that
+ * entry into your local database.
+ *
  * Created by ndeibert on 3/16/2018.
  */
 

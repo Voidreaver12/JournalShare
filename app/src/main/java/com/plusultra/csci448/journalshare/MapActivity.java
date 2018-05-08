@@ -6,6 +6,8 @@ import android.support.v4.app.Fragment;
 
 
 /**
+ * MapActivity is used to host a MapFragment.
+ *
  * Created by ndeibert on 3/16/2018.
  */
 

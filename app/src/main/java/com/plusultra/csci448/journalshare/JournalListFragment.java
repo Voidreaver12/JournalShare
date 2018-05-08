@@ -20,6 +20,10 @@ import android.widget.TextView;
 import java.util.List;
 
 /**
+ * JournalListFragment is used to contain a list (RecyclerView)
+ * of journal entries. This is also where the user can navigate
+ * to the map, or create new entries.
+ *
  * Created by ndeibert on 2/27/2018.
  */
 

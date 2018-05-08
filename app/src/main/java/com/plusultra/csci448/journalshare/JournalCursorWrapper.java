@@ -9,6 +9,8 @@ import java.util.Date;
 import java.util.UUID;
 
 /**
+ * JournalCursorWrapper is used to get journal entries from the database.
+ *
  * Created by ndeibert on 5/7/2018.
  */
 

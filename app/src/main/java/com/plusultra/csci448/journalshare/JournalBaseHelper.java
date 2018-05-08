@@ -7,6 +7,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 import com.plusultra.csci448.journalshare.JournalDbSchema.JournalTable;
 
 /**
+ * JournalBaseHelper is used to create the local database for journal entries.
+ *
  * Created by ndeibert on 5/7/2018.
  */
 

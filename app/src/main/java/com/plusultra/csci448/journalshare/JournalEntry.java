@@ -4,6 +4,9 @@ import java.util.Date;
 import java.util.UUID;
 
 /**
+ * JournalEntry is a class to contain a single journal entry and its appropriate data.
+ * Each journal entry has a unique UUID.
+ *
  * Created by Han on 2/27/18.
  */
 

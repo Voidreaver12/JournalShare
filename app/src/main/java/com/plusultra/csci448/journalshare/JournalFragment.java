@@ -46,6 +46,12 @@ import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 /**
+ * JournalFragment provides the majority of the functionality of the app.
+ * This is where the user interaction with views makes modifications to the
+ * local database. This is also where the app requests permissions and will
+ * make a location request if the user decides to share the journal entry
+ * to the remote database.
+ *
  * Created by Han on 2/27/18.
  */
 

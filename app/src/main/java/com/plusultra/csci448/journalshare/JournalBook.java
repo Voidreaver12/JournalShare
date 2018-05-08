@@ -12,6 +12,9 @@ import java.util.List;
 import java.util.UUID;
 
 /**
+ * JournalBook is used as a singleton to contain your local journal entries.
+ * This is directly connected to the local database.
+ *
  * Created by ndeibert on 2/27/2018.
  */
 

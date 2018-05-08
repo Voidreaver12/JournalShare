@@ -5,6 +5,9 @@ import android.content.Intent;
 import android.support.v4.app.Fragment;
 
 /**
+ * JournalListActivity is used to host the JournalListFragment.
+ * In addition, it implements callback methods to properly interact with the fragment.
+ *
  * Created by ndeibert on 2/27/2018.
  */
 

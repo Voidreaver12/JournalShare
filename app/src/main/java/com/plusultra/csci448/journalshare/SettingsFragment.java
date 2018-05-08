@@ -21,6 +21,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * SettingsFragment is used to change settings within the app.
+ * These will directly update the singleton JournalBook.
+ * Currently these are not connected to the database and will
+ * reset upon reopening the app. The entire settings might
+ * even be removed due to limited functionality and conflicting
+ * responsibilities with the OS.
+ *
  * Created by ndeibert on 3/16/2018.
  */
 

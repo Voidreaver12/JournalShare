@@ -13,6 +13,10 @@ import java.util.List;
 import java.util.UUID;
 
 /**
+ * JournalPagerActivity is used to allow the user to
+ * swipe left and right to navigate between their
+ * local journal entries.
+ *
  * Created by Han on 2/27/18.
  */
 
