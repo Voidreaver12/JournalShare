@@ -16,5 +16,6 @@
 
     <string name="start_polling">Start polling</string>
     <string name="stop_polling">Stop polling</string>
+    <string name="check_journal">Check your entries!</string>
 
 </resources>

@@ -1,5 +1,6 @@
 package com.plusultra.csci448.journalshare;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
 
@@ -9,6 +10,10 @@ import android.support.v4.app.Fragment;
 
 public class JournalListActivity extends SingleFragmentActivity
                                     implements JournalListFragment.Callbacks, JournalFragment.Callbacks {
+
+    public static Intent newIntent(Context context) {
+        return new Intent(context, JournalListActivity.class);
+    }
 
     @Override
     protected Fragment createFragment() { return new JournalListFragment(); }
