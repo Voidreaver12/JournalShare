@@ -6,6 +6,10 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 
 /**
+ * SingleFragmentActivity is used as a base class
+ * for all activities that will only host a single
+ * fragment.
+ *
  * Created by ndeibert on 2/27/2018.
  */
 

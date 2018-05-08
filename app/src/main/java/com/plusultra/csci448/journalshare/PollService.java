@@ -15,6 +15,10 @@ import android.util.Log;
 import java.util.concurrent.TimeUnit;
 
 /**
+ * PollService is used to set a notification alarm.
+ * The alarm will remind you once every 24 hours to
+ * come back and create a new journal entry.
+ *
  * Created by Han on 5/7/18.
  */
 

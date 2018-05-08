@@ -7,15 +7,19 @@ import android.database.sqlite.SQLiteOpenHelper;
 import com.plusultra.csci448.journalshare.JournalDbSchema.JournalTable;
 
 /**
+ * JournalBaseHelper is used to create the local database for journal entries.
+ *
  * Created by ndeibert on 5/7/2018.
  */
 
 public class JournalBaseHelper extends SQLiteOpenHelper {
+
     private static final int VERSION = 1;
     private static final String DATABASE_NAME = "journalBase.db";
 
     public JournalBaseHelper(Context context) { super(context, DATABASE_NAME, null, VERSION); }
 
+    // Create database with columns: uuid, title, text, date, lat, and lon
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("create table " + JournalTable.NAME + "(" +
@@ -29,6 +33,7 @@ public class JournalBaseHelper extends SQLiteOpenHelper {
         );
     }
 
+    // No upgrading needed
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 

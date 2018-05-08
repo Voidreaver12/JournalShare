@@ -5,20 +5,15 @@
         android:id="@+id/menu_item_new_journal_entry"
         android:icon="@drawable/ic_menu_add"
         android:title="New Entry"
-        app:showAsAction="ifRoom|withText"/>
+        app:showAsAction="ifRoom|collapseActionView"/>
     <item
         android:id="@+id/menu_item_map_search"
         android:icon="@drawable/ic_menu_map"
         android:title="Map"
-        app:showAsAction="ifRoom|withText"/>
-    <item
-        android:id="@+id/menu_item_settings"
-        android:icon="@drawable/ic_menu_settings"
-        android:title="Settings"
-        app:showAsAction="ifRoom|withText"/>
+        app:showAsAction="ifRoom|collapseActionView"/>
 
     <item android:id="@+id/menu_item_toggle_polling"
         android:title="@string/start_polling"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="ifRoom|withText" />
 
 </menu>

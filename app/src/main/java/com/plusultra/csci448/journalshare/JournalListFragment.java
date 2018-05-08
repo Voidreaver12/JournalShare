@@ -20,12 +20,14 @@ import android.widget.TextView;
 import java.util.List;
 
 /**
+ * JournalListFragment is used to contain a list (RecyclerView)
+ * of journal entries. This is also where the user can navigate
+ * to the map, or create new entries.
+ *
  * Created by ndeibert on 2/27/2018.
  */
 
 public class JournalListFragment extends Fragment {
-
-    private static final int RC_SETTINGS = 5;
 
     private RecyclerView mJournalRecyclerView;
     private LinearLayout mEmptyView;
@@ -59,7 +61,6 @@ public class JournalListFragment extends Fragment {
 
         }
 
-        //start poll service
         PollService.setServiceAlarm(getActivity(), true);
     }
 
@@ -130,24 +131,11 @@ public class JournalListFragment extends Fragment {
                 PollService.setServiceAlarm(getActivity(), shouldStartAlarm);
                 getActivity().invalidateOptionsMenu();
                 return true;
-            case R.id.menu_item_settings:
-                Intent settingsIntent = SettingsActivity.newIntent(getActivity());
-                startActivityForResult(settingsIntent, RC_SETTINGS);
-                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
-    @Override
-    public void onActivityResult(int reqCode, int resCode, Intent data) {
-        if (resCode != Activity.RESULT_OK) {
-            return;
-        }
-        if (reqCode == RC_SETTINGS && data != null) {
-            // process settings data, update journalbook
-        }
-    }
 
     public void updateUI() {
         JournalBook book = JournalBook.get(getActivity());

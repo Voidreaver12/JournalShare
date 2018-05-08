@@ -1,6 +1,8 @@
 package com.plusultra.csci448.journalshare;
 
 /**
+ * JournalDbSchema is the schema definition of the local database.
+ *
  * Created by ndeibert on 5/7/2018.
  */
 

@@ -9,12 +9,15 @@ import java.util.Date;
 import java.util.UUID;
 
 /**
+ * JournalCursorWrapper is used to get journal entries from the database.
+ *
  * Created by ndeibert on 5/7/2018.
  */
 
 public class JournalCursorWrapper extends CursorWrapper {
     public JournalCursorWrapper(Cursor cursor) { super(cursor); }
     public JournalEntry getEntry() {
+        // Get values from database
         String uuid = getString(getColumnIndex(JournalTable.Cols.UUID));
         String title = getString(getColumnIndex(JournalTable.Cols.TITLE));
         String text = getString(getColumnIndex(JournalTable.Cols.TEXT));
@@ -22,6 +25,7 @@ public class JournalCursorWrapper extends CursorWrapper {
         double lat = getDouble(getColumnIndex(JournalTable.Cols.LAT));
         double lon = getDouble(getColumnIndex(JournalTable.Cols.LON));
 
+        // Create new entry object with values and return it
         JournalEntry entry = new JournalEntry(UUID.fromString(uuid));
         entry.setTitle(title);
         entry.setText(text);

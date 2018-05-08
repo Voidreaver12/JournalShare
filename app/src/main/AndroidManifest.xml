@@ -29,10 +29,6 @@
             android:name=".MapActivity"
             android:parentActivityName=".JournalListActivity">
         </activity>
-        <activity
-            android:name=".SettingsActivity"
-            android:parentActivityName=".JournalListActivity">
-        </activity>
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"

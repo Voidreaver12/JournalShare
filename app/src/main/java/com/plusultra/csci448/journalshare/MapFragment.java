@@ -37,24 +37,23 @@ import java.util.Map;
 import java.util.UUID;
 
 /**
+ * MapFragment is where the user can browse on a Google Map
+ * and look for anonymous journal entries from the remote
+ * database. Tapping on a pin will bring up the title of that
+ * journal entry, and tapping on the title will download that
+ * entry into your local database.
+ *
  * Created by ndeibert on 3/16/2018.
  */
 
 public class MapFragment extends SupportMapFragment {
 
     private static final String TAG = "MapFragment";
-    private static final String[] LOCATION_PERMISSIONS = new String[]{
-            Manifest.permission.ACCESS_FINE_LOCATION,
-            Manifest.permission.ACCESS_COARSE_LOCATION,
-    };
-    private static final int REQUEST_LOCATION_PERMISSIONS = 0;
 
-    FirebaseDatabase mDatabase;
-    DatabaseReference mRef;
-
+    private FirebaseDatabase mDatabase;
+    private DatabaseReference mRef;
     private GoogleApiClient mClient;
     private GoogleMap mMap;
-
     private List<JournalEntry> entries = new ArrayList<>();
 
     public static MapFragment newInstance() {
@@ -69,6 +68,7 @@ public class MapFragment extends SupportMapFragment {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
 
+        // get Google API client
         mClient = new GoogleApiClient.Builder(getActivity())
                 .addApi(LocationServices.API)
                 .addConnectionCallbacks(new GoogleApiClient.ConnectionCallbacks() {
@@ -76,23 +76,24 @@ public class MapFragment extends SupportMapFragment {
                     public void onConnected(@Nullable Bundle bundle) {
                         getActivity().invalidateOptionsMenu();
                     }
-
                     @Override
-                    public void onConnectionSuspended(int i) {
-
-                    }
+                    public void onConnectionSuspended(int i) {}
                 })
                 .build();
+
+        // get Google Map
         getMapAsync(new OnMapReadyCallback() {
             @Override
             public void onMapReady(GoogleMap googleMap) {
                 mMap = googleMap;
+                // update map with markers when map is done loading
                 mMap.setOnMapLoadedCallback(new GoogleMap.OnMapLoadedCallback() {
                     @Override
                     public void onMapLoaded() {
                         updateUI();
                     }
                 });
+                // On tap marker, show title
                 mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
                     @Override
                     public boolean onMarkerClick(Marker marker) {
@@ -100,6 +101,7 @@ public class MapFragment extends SupportMapFragment {
                         return true;
                     }
                 });
+                // On tap title, save entry
                 mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
                     @Override
                     public void onInfoWindowClick(Marker marker) {
@@ -110,46 +112,33 @@ public class MapFragment extends SupportMapFragment {
                         }
                     }
                 });
-                //updateUI();
-                mDatabase = FirebaseDatabase.getInstance();
-                mRef = mDatabase.getReference("entries");
-                mRef.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        Map<String, Object> journalMap = (HashMap<String, Object>)dataSnapshot.getValue();
-                        for (Object o : journalMap.values()) {
-                            if (o instanceof Map) {
-                                JournalEntry entry = new JournalEntry();
-                                entry.setTitle(((Map) o).get("title").toString());
-                                entry.setText(((Map) o).get("text").toString());
-                                entry.setLat((double)((Map) o).get("lat"));
-                                entry.setLon((double)((Map) o).get("lon"));
-                                //Log.d(TAG, "title: " + entry.getTitle());
-                                //Log.d(TAG, "text: " + entry.getText());
-                                //Log.d(TAG, "lat: " + entry.getLat());
-                                //Log.d(TAG, "lon: " + entry.getLon());
-                                entries.add(entry);
-                            }
-                        }
-                        updateUI();
-                    }
 
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
-                    }
-                });
             }
         });
+        // get database reference
+        mDatabase = FirebaseDatabase.getInstance();
+        mRef = mDatabase.getReference("entries");
+        mRef.addValueEventListener(new ValueEventListener() {
+            // get all data
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Map<String, Object> journalMap = (HashMap<String, Object>)dataSnapshot.getValue();
+                for (Object o : journalMap.values()) {
+                    if (o instanceof Map) {
+                        // parse title, text, and coordinates and add to list
+                        JournalEntry entry = new JournalEntry();
+                        entry.setTitle(((Map) o).get("title").toString());
+                        entry.setText(((Map) o).get("text").toString());
+                        entry.setLat((double)((Map) o).get("lat"));
+                        entry.setLon((double)((Map) o).get("lon"));
+                        entries.add(entry);
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {}
+        });
 
-        if (hasLocationPermission()) {
-            //findImage();
-        } else {
-            Log.d(TAG, "No permissions, ask for them.");
-            requestPermissions(LOCATION_PERMISSIONS, REQUEST_LOCATION_PERMISSIONS);
-        }
-
-        Toast.makeText(getActivity(), R.string.toast_map, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -157,7 +146,6 @@ public class MapFragment extends SupportMapFragment {
         super.onStart();
         getActivity().invalidateOptionsMenu();
         mClient.connect();
-        updateUI();
     }
 
     @Override
@@ -166,30 +154,14 @@ public class MapFragment extends SupportMapFragment {
         mClient.disconnect();
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        switch(requestCode) {
-            case REQUEST_LOCATION_PERMISSIONS:
-                if (hasLocationPermission()) {
-                    //findImage();
-                }
-            default:
-                super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        }
-    }
-
-    private boolean hasLocationPermission() {
-        int result = ContextCompat.checkSelfPermission(getActivity(), LOCATION_PERMISSIONS[0]);
-        return (result == PackageManager.PERMISSION_GRANTED);
-    }
-
-
     private void updateUI() {
-        Log.d(TAG, "entries size: " + entries.size());
+        // If the map is invalid, dont update
         if (mMap == null) {
             return;
         }
+        // clear the map
         mMap.clear();
+        // get markers for all journal entries in firebase
         LatLngBounds.Builder boundsBuilder = new LatLngBounds.Builder();
         if (entries.size() > 0) {
             for (int i = 0; i < entries.size(); i++) {
@@ -207,6 +179,7 @@ public class MapFragment extends SupportMapFragment {
             boundsBuilder.include(coloradoNorthEast);
             boundsBuilder.include(coloradoSouthWest);
         }
+        // update camera based on markers
         LatLngBounds bounds = boundsBuilder.build();
         int margin = getResources().getDimensionPixelSize(R.dimen.map_inset_margin);
         CameraUpdate update = CameraUpdateFactory.newLatLngBounds(bounds, margin);

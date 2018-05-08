@@ -46,13 +46,18 @@ import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 /**
+ * JournalFragment provides the majority of the functionality of the app.
+ * This is where the user interaction with views makes modifications to the
+ * local database. This is also where the app requests permissions and will
+ * make a location request if the user decides to share the journal entry
+ * to the remote database.
+ *
  * Created by Han on 2/27/18.
  */
 
 public class JournalFragment extends Fragment {
 
     private static final String ARG_ENTRY_ID = "entry_id";
-
     private static final String TAG = "JournalFragment";
 
     private static final String[] LOCATION_PERMISSIONS = new String[]{
@@ -63,18 +68,14 @@ public class JournalFragment extends Fragment {
 
     private FirebaseDatabase mDatabase;
     private DatabaseReference mRef;
-
     private GoogleApiClient mClient;
 
     private JournalEntry mEntry;
     private EditText mTitle;
     private EditText mText;
     private TextView mDate;
-    private TextView mTime;
     private Callbacks mCallbacks;
-    private LinearLayout mContainer;
 
-    private int entryBackgroundResId = R.drawable.default_bg;
 
     public interface Callbacks {
         void onEntryUpdated(JournalEntry entry);
@@ -96,13 +97,14 @@ public class JournalFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+        // get database reference
         mDatabase = FirebaseDatabase.getInstance();
         mRef = mDatabase.getReference("entries");
+        // get current journal entry
         UUID entryId = (UUID) getArguments().getSerializable(ARG_ENTRY_ID);
         JournalBook journalBook = JournalBook.get(getActivity());
         mEntry = journalBook.getEntry(entryId);
-        if (journalBook.isBgSet()) { entryBackgroundResId = journalBook.getEntryBgId(); }
-
+        // get Google API client
         mClient = new GoogleApiClient.Builder(getActivity())
                 .addApi(LocationServices.API)
                 .addConnectionCallbacks(new GoogleApiClient.ConnectionCallbacks() {
@@ -122,13 +124,10 @@ public class JournalFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // inflate view
         View v = inflater.inflate(R.layout.fragment_entry, container, false);
 
-
-
-        mContainer = (LinearLayout) v.findViewById(R.id.entry_container);
-        mContainer.setBackgroundResource(entryBackgroundResId);
-
+        // set title with listener
         mTitle = (EditText) v.findViewById(R.id.entry_title);
         mTitle.setText(mEntry.getTitle());
         mTitle.addTextChangedListener(new TextWatcher() {
@@ -155,29 +154,9 @@ public class JournalFragment extends Fragment {
 
             }
         });
+
+        // set entry content with listener
         mText = (EditText) v.findViewById(R.id.entry_box);
-
-        JournalBook journalBook = JournalBook.get(getActivity());
-        int font = journalBook.getFont();
-        if (font == 0) {
-            Typeface externalFont = Typeface.createFromAsset(getContext().getAssets(), "fonts/Roboto-Black.ttf");
-            ((TextView) mText).setTypeface(externalFont);
-        }
-
-        else if(font == 1) {
-            Typeface externalFont = Typeface.createFromAsset(getContext().getAssets(), "fonts/Roboto-Medium.ttf");
-            ((TextView) mText).setTypeface(externalFont);
-        }
-        else if(font == 2) {
-            Typeface externalFont = Typeface.createFromAsset(getContext().getAssets(), "fonts/Roboto-Thin.ttf");
-            ((TextView) mText).setTypeface(externalFont);
-        }
-        if (font == 3) {
-            Typeface externalFont = Typeface.createFromAsset(getContext().getAssets(), "fonts/Chantelli_Antiqua.ttf");
-            ((TextView) mText).setTypeface(externalFont);
-        }
-
-
         mText.setText(mEntry.getText());
         mText.addTextChangedListener(new TextWatcher() {
             @Override
@@ -196,9 +175,10 @@ public class JournalFragment extends Fragment {
 
             }
         });
+
+        // set date
         mDate = (TextView) v.findViewById(R.id.entry_date);
         mDate.setText(mEntry.getDate().toString());
-        mTime = (TextView) v.findViewById(R.id.entry_time);
 
 
         return v;
@@ -208,10 +188,6 @@ public class JournalFragment extends Fragment {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.fragment_journal, menu);
-        //MenuItem share = menu.findItem(R.id.menu_item_map_share);
-        //MenuItem delete = menu.findItem(R.id.menu_item_delete);
-        //MenuItem camera = menu.findItem(R.id.menu_item_camera);
-
     }
 
     @Override
@@ -219,12 +195,10 @@ public class JournalFragment extends Fragment {
         switch(item.getItemId()) {
             case R.id.menu_item_map_share:
                 Toast.makeText(getActivity(), R.string.toast_share, Toast.LENGTH_SHORT).show();
-                if (JournalBook.get(getActivity()).isSharingEnabled()) {
-                    if (hasLocationPermission()) {
-                        share();
-                    } else {
-                        requestPermissions(LOCATION_PERMISSIONS, REQUEST_LOCATION_PERMISSIONS);
-                    }
+                if (hasLocationPermission()) {
+                    share();
+                } else {
+                    requestPermissions(LOCATION_PERMISSIONS, REQUEST_LOCATION_PERMISSIONS);
                 }
                 return true;
             case R.id.menu_item_delete:
@@ -232,9 +206,6 @@ public class JournalFragment extends Fragment {
                 journal.deleteEntry(mEntry.getId());
                 Intent intent = new Intent(getActivity(), JournalListActivity.class);
                 startActivity(intent);
-                return true;
-            case R.id.menu_item_camera:
-                Toast.makeText(getActivity(), R.string.toast_camera, Toast.LENGTH_SHORT).show();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -244,6 +215,7 @@ public class JournalFragment extends Fragment {
 
 
     private void share() {
+        // make request to location services
         LocationRequest request = LocationRequest.create();
         request.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
         request.setNumUpdates(1);
@@ -254,9 +226,9 @@ public class JournalFragment extends Fragment {
                         @Override
                         public void onLocationChanged(Location location) {
                             Log.i(TAG, "Got a location: " + location);
+                            // save location and share with remote database
                             mEntry.setLat(location.getLatitude());
                             mEntry.setLon(location.getLongitude());
-                            updateEntry();
                             DatabaseReference mNewEntryRef = mRef.child(mEntry.getId().toString());
                             mNewEntryRef.setValue(mEntry);
                         }
