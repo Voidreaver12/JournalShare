@@ -5,16 +5,11 @@
         android:id="@+id/menu_item_map_share"
         android:icon="@drawable/ic_menu_map"
         android:title="Share"
-        app:showAsAction="collapseActionView"/>
-    <item
-        android:id="@+id/menu_item_camera"
-        android:icon="@drawable/ic_menu_camera"
-        android:title="Add Photo"
-        app:showAsAction="collapseActionView"/>
+        app:showAsAction="ifRoom|collapseActionView"/>
     <item
         android:id="@+id/menu_item_delete"
         android:icon="@drawable/ic_menu_trash"
         android:title="Delete"
-        app:showAsAction="collapseActionView"/>
+        app:showAsAction="ifRoom|collapseActionView"/>
 
 </menu>

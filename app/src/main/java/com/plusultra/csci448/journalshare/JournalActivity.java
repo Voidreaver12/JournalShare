@@ -14,6 +14,7 @@ public class JournalActivity extends SingleFragmentActivity {
 
     private static final String EXTRA_ENTRY_ID = "com.csci448.PLUSULTRA.entry_id";
 
+    // Get JournalFragment
     @Override
     protected Fragment createFragment() {
         UUID entryId = (UUID) getIntent().getSerializableExtra(EXTRA_ENTRY_ID);

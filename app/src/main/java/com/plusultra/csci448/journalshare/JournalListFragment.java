@@ -29,8 +29,6 @@ import java.util.List;
 
 public class JournalListFragment extends Fragment {
 
-    private static final int RC_SETTINGS = 5;
-
     private RecyclerView mJournalRecyclerView;
     private LinearLayout mEmptyView;
     private Button mEmptyViewNewEntryButton;
@@ -63,7 +61,6 @@ public class JournalListFragment extends Fragment {
 
         }
 
-        //start poll service
         PollService.setServiceAlarm(getActivity(), true);
     }
 
@@ -134,24 +131,11 @@ public class JournalListFragment extends Fragment {
                 PollService.setServiceAlarm(getActivity(), shouldStartAlarm);
                 getActivity().invalidateOptionsMenu();
                 return true;
-//            case R.id.menu_item_settings:
-//                Intent settingsIntent = SettingsActivity.newIntent(getActivity());
-//                startActivityForResult(settingsIntent, RC_SETTINGS);
-//                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
-    @Override
-    public void onActivityResult(int reqCode, int resCode, Intent data) {
-        if (resCode != Activity.RESULT_OK) {
-            return;
-        }
-        if (reqCode == RC_SETTINGS && data != null) {
-            // process settings data, update journalbook
-        }
-    }
 
     public void updateUI() {
         JournalBook book = JournalBook.get(getActivity());

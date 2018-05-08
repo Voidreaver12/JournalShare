@@ -18,14 +18,18 @@ public class JournalListActivity extends SingleFragmentActivity
         return new Intent(context, JournalListActivity.class);
     }
 
+    // get JournalListFragment
     @Override
     protected Fragment createFragment() { return new JournalListFragment(); }
 
+    // when tapping on journal entry in list
     @Override
     public void onEntrySelected(JournalEntry entry) {
+        // if vertical view, go to journal entry
         if (findViewById(R.id.detail_fragment_container) == null) {
             Intent intent = JournalPagerActivity.newIntent(this, entry.getId());
             startActivity(intent);
+        // if horizontal view, open entry in second pane
         } else {
             Fragment newDetail = JournalFragment.newInstance(entry.getId());
             getSupportFragmentManager().beginTransaction()
@@ -33,6 +37,7 @@ public class JournalListActivity extends SingleFragmentActivity
         }
     }
 
+    // update UI whenever entry is updated
     @Override
     public void onEntryUpdated(JournalEntry entry) {
         JournalListFragment listFragment = (JournalListFragment) getSupportFragmentManager()
