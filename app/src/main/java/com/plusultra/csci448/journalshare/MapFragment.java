@@ -131,7 +131,7 @@ public class MapFragment extends SupportMapFragment {
                                 entries.add(entry);
                             }
                         }
-                        updateUI();
+                        //updateUI();
                     }
 
                     @Override
@@ -157,7 +157,7 @@ public class MapFragment extends SupportMapFragment {
         super.onStart();
         getActivity().invalidateOptionsMenu();
         mClient.connect();
-        updateUI();
+        //updateUI();
     }
 
     @Override

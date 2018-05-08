@@ -256,7 +256,6 @@ public class JournalFragment extends Fragment {
                             Log.i(TAG, "Got a location: " + location);
                             mEntry.setLat(location.getLatitude());
                             mEntry.setLon(location.getLongitude());
-                            updateEntry();
                             DatabaseReference mNewEntryRef = mRef.child(mEntry.getId().toString());
                             mNewEntryRef.setValue(mEntry);
                         }
