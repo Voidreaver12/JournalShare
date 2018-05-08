@@ -134,10 +134,10 @@ public class JournalListFragment extends Fragment {
                 PollService.setServiceAlarm(getActivity(), shouldStartAlarm);
                 getActivity().invalidateOptionsMenu();
                 return true;
-            case R.id.menu_item_settings:
-                Intent settingsIntent = SettingsActivity.newIntent(getActivity());
-                startActivityForResult(settingsIntent, RC_SETTINGS);
-                return true;
+//            case R.id.menu_item_settings:
+//                Intent settingsIntent = SettingsActivity.newIntent(getActivity());
+//                startActivityForResult(settingsIntent, RC_SETTINGS);
+//                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }

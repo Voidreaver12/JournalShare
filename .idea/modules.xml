@@ -3,9 +3,9 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/JournalShare.iml" filepath="$PROJECT_DIR$/JournalShare.iml" />
-      <module fileurl="file://C:\Stuff\School\CSCI448\JournalShare\JournalShare.iml" filepath="C:\Stuff\School\CSCI448\JournalShare\JournalShare.iml" />
+      <module fileurl="file://C:/Stuff/School/CSCI448/JournalShare/JournalShare.iml" filepath="C:/Stuff/School/CSCI448/JournalShare/JournalShare.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://C:\Stuff\School\CSCI448\JournalShare\app\app.iml" filepath="C:\Stuff\School\CSCI448\JournalShare\app\app.iml" />
+      <module fileurl="file://C:/Stuff/School/CSCI448/JournalShare/app/app.iml" filepath="C:/Stuff/School/CSCI448/JournalShare/app/app.iml" />
     </modules>
   </component>
 </project>
