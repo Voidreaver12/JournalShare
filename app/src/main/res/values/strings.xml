@@ -14,8 +14,8 @@
 
     <string name="settings_bg">Background Image</string>
 
-    <string name="start_polling">Start polling</string>
-    <string name="stop_polling">Stop polling</string>
+    <string name="start_polling">Enable notifications</string>
+    <string name="stop_polling">Disable notifications</string>
     <string name="check_journal">Check your entries!</string>
 
 </resources>

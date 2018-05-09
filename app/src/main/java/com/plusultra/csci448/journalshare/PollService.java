@@ -25,7 +25,7 @@ import java.util.concurrent.TimeUnit;
 public class PollService extends IntentService{
     private static final String TAG = "PollService";
     //Interval constant is one day
-    private static final long POLL_INTERVAL_MS = TimeUnit.DAYS.toDays(1);
+    private static final long POLL_INTERVAL_MS = TimeUnit.MINUTES.toMillis(1);
 
     public static Intent newIntent(Context context) {
         return new Intent(context, PollService.class);
